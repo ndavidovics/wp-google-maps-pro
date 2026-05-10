@@ -1,0 +1,106 @@
+/* WP Google Maps Pro — Swiper carousel themes */
+
+.wpgmza_marker_carousel.swiper {
+    padding: 0 0 36px 0;
+    box-sizing: border-box;
+}
+.wpgmza_marker_carousel .swiper-slide {
+    box-sizing: border-box;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 4px;
+    height: auto;
+}
+.wpgmza_marker_carousel .wpgmza_carousel_image_holder img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 8px auto;
+    border-radius: 3px;
+}
+.wpgmza_marker_carousel .wpgmza_marker_title {
+    font-weight: 600;
+    margin: 0 0 4px 0;
+}
+.wpgmza_marker_carousel .wpgmza_marker_address,
+.wpgmza_marker_carousel .wpgmza_marker_description {
+    font-size: 0.9em;
+    margin: 0 0 4px 0;
+    color: #555;
+}
+.wpgmza_marker_carousel .swiper-button-prev,
+.wpgmza_marker_carousel .swiper-button-next {
+    width: 32px;
+    height: 32px;
+    margin-top: -16px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 50%;
+    color: #fff;
+    transition: background 0.15s ease;
+}
+.wpgmza_marker_carousel .swiper-button-prev:hover,
+.wpgmza_marker_carousel .swiper-button-next:hover {
+    background: rgba(0, 0, 0, 0.65);
+}
+.wpgmza_marker_carousel .swiper-button-prev:after,
+.wpgmza_marker_carousel .swiper-button-next:after {
+    font-size: 14px;
+    font-weight: 700;
+}
+.wpgmza_marker_carousel .swiper-pagination-bullet {
+    background: #888;
+    opacity: 0.5;
+}
+.wpgmza_marker_carousel .swiper-pagination-bullet-active {
+    opacity: 1;
+}
+
+/* Theme variants */
+.wpgmza_marker_carousel.wpgmza-theme-sky .swiper-button-prev,
+.wpgmza_marker_carousel.wpgmza-theme-sky .swiper-button-next { background: #388bd1; }
+.wpgmza_marker_carousel.wpgmza-theme-sky .swiper-pagination-bullet-active { background: #388bd1; }
+.wpgmza_marker_carousel.wpgmza-theme-sky .swiper-slide { background: #a1def8; color: #fff; }
+.wpgmza_marker_carousel.wpgmza-theme-sky .wpgmza_marker_address,
+.wpgmza_marker_carousel.wpgmza-theme-sky .wpgmza_marker_description { color: #f0f8ff; }
+
+.wpgmza_marker_carousel.wpgmza-theme-sun .swiper-button-prev,
+.wpgmza_marker_carousel.wpgmza-theme-sun .swiper-button-next { background: #ff8a3c; }
+.wpgmza_marker_carousel.wpgmza-theme-sun .swiper-pagination-bullet-active { background: #ff8a3c; }
+.wpgmza_marker_carousel.wpgmza-theme-sun .swiper-slide { background: #fee664; color: #5a3b00; }
+
+.wpgmza_marker_carousel.wpgmza-theme-earth .swiper-button-prev,
+.wpgmza_marker_carousel.wpgmza-theme-earth .swiper-button-next { background: #B99C6B; }
+.wpgmza_marker_carousel.wpgmza-theme-earth .swiper-pagination-bullet-active { background: #B99C6B; }
+.wpgmza_marker_carousel.wpgmza-theme-earth .swiper-slide { background: #A9A18C; color: #fff; }
+
+.wpgmza_marker_carousel.wpgmza-theme-monotone .swiper-button-prev,
+.wpgmza_marker_carousel.wpgmza-theme-monotone .swiper-button-next { background: #555; }
+.wpgmza_marker_carousel.wpgmza-theme-monotone .swiper-pagination-bullet-active { background: #555; }
+.wpgmza_marker_carousel.wpgmza-theme-monotone .swiper-slide { background: #eee; color: #333; }
+
+.wpgmza_marker_carousel.wpgmza-theme-pinkpurple .swiper-button-prev,
+.wpgmza_marker_carousel.wpgmza-theme-pinkpurple .swiper-button-next { background: #db6ac5; }
+.wpgmza_marker_carousel.wpgmza-theme-pinkpurple .swiper-pagination-bullet-active { background: #db6ac5; }
+.wpgmza_marker_carousel.wpgmza-theme-pinkpurple .swiper-slide { background: #ff6699; color: #fff; }
+
+.wpgmza_marker_carousel.wpgmza-theme-white .swiper-button-prev,
+.wpgmza_marker_carousel.wpgmza-theme-white .swiper-button-next { background: #ccc; color: #555; }
+.wpgmza_marker_carousel.wpgmza-theme-white .swiper-pagination-bullet-active { background: #888; }
+.wpgmza_marker_carousel.wpgmza-theme-white .swiper-slide { background: #fff; color: #333; border: 1px solid #eee; }
+
+.wpgmza_marker_carousel.wpgmza-theme-black .swiper-button-prev,
+.wpgmza_marker_carousel.wpgmza-theme-black .swiper-button-next { background: #222; }
+.wpgmza_marker_carousel.wpgmza-theme-black .swiper-pagination-bullet { background: #fff; }
+.wpgmza_marker_carousel.wpgmza-theme-black .swiper-pagination-bullet-active { background: #fff; }
+.wpgmza_marker_carousel.wpgmza-theme-black .swiper-slide { background: #000; color: #fff; }
+.wpgmza_marker_carousel.wpgmza-theme-black .wpgmza_marker_address,
+.wpgmza_marker_carousel.wpgmza-theme-black .wpgmza_marker_description { color: #ccc; }
+
+@media (max-width: 1024px) {
+    .wpgmza_marker_carousel .swiper-button-prev,
+    .wpgmza_marker_carousel .swiper-button-next {
+        width: 28px;
+        height: 28px;
+        margin-top: -14px;
+    }
+}

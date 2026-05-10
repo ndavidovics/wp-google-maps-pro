@@ -2371,38 +2371,16 @@ function wpgmaps_user_javascript_pro() {
             
             
             if ($include_owl) {
-                wp_register_script('owl_carousel', plugins_url('wp-google-maps-pro') .'/js/owl.carousel.min.js', array(), $wpgmza_pro_version.'p' , false);
-                wp_enqueue_script( 'owl_carousel' );
-                wp_register_style('owl_carousel_style', plugins_url('wp-google-maps-pro') .'/css/owl.carousel.css');
-                wp_enqueue_style( 'owl_carousel_style' );
-                wp_register_style('owl_carousel_style_theme', plugins_url('wp-google-maps-pro') .'/css/owl.theme.css');
-                wp_enqueue_style( 'owl_carousel_style_theme' );
-                if (isset($wpgmza_settings['wpgmza_settings_carousel_markerlist_theme']) && $wpgmza_settings['wpgmza_settings_carousel_markerlist_theme'] == 'sky') { 
-                    wp_register_style('owl_carousel_style_theme_select', plugins_url('wp-google-maps-pro') .'/css/carousel_sky.css');
-                    wp_enqueue_style( 'owl_carousel_style_theme_select' );
-                } else if (isset($wpgmza_settings['wpgmza_settings_carousel_markerlist_theme']) && $wpgmza_settings['wpgmza_settings_carousel_markerlist_theme'] == 'sun') { 
-                    wp_register_style('owl_carousel_style_theme_select', plugins_url('wp-google-maps-pro') .'/css/carousel_sun.css');
-                    wp_enqueue_style( 'owl_carousel_style_theme_select' );
-                } else if (isset($wpgmza_settings['wpgmza_settings_carousel_markerlist_theme']) && $wpgmza_settings['wpgmza_settings_carousel_markerlist_theme'] == 'earth') { 
-                    wp_register_style('owl_carousel_style_theme_select', plugins_url('wp-google-maps-pro') .'/css/carousel_earth.css');
-                    wp_enqueue_style( 'owl_carousel_style_theme_select' );
-                } else if (isset($wpgmza_settings['wpgmza_settings_carousel_markerlist_theme']) && $wpgmza_settings['wpgmza_settings_carousel_markerlist_theme'] == 'monotone') { 
-                    wp_register_style('owl_carousel_style_theme_select', plugins_url('wp-google-maps-pro') .'/css/carousel_monotone.css');
-                    wp_enqueue_style( 'owl_carousel_style_theme_select' );
-                } else if (isset($wpgmza_settings['wpgmza_settings_carousel_markerlist_theme']) && $wpgmza_settings['wpgmza_settings_carousel_markerlist_theme'] == 'pinkpurple') { 
-                    wp_register_style('owl_carousel_style_theme_select', plugins_url('wp-google-maps-pro') .'/css/carousel_pinkpurple.css');
-                    wp_enqueue_style( 'owl_carousel_style_theme_select' );
-                } else if (isset($wpgmza_settings['wpgmza_settings_carousel_markerlist_theme']) && $wpgmza_settings['wpgmza_settings_carousel_markerlist_theme'] == 'white') { 
-                    wp_register_style('owl_carousel_style_theme_select', plugins_url('wp-google-maps-pro') .'/css/carousel_white.css');
-                    wp_enqueue_style( 'owl_carousel_style_theme_select' );
-                } else if (isset($wpgmza_settings['wpgmza_settings_carousel_markerlist_theme']) && $wpgmza_settings['wpgmza_settings_carousel_markerlist_theme'] == 'black') { 
-                    wp_register_style('owl_carousel_style_theme_select', plugins_url('wp-google-maps-pro') .'/css/carousel_black.css');
-                    wp_enqueue_style( 'owl_carousel_style_theme_select' );
-                } else {
-                    wp_register_style('owl_carousel_style_theme_select', plugins_url('wp-google-maps-pro') .'/css/carousel_sky.css');
-                    wp_enqueue_style( 'owl_carousel_style_theme_select' );
-                }
-                
+                wp_register_script('wpgmaps_swiper', plugins_url('wp-google-maps-pro') .'/js/swiper-bundle.min.js', array(), '11.2.10', false);
+                wp_enqueue_script('wpgmaps_swiper');
+                wp_register_style('wpgmaps_swiper_style', plugins_url('wp-google-maps-pro') .'/css/swiper-bundle.min.css', array(), '11.2.10');
+                wp_enqueue_style('wpgmaps_swiper_style');
+                wp_register_style('wpgmaps_carousel_themes', plugins_url('wp-google-maps-pro') .'/css/wpgmaps-carousel.css', array('wpgmaps_swiper_style'), $wpgmza_pro_version.'p');
+                wp_enqueue_style('wpgmaps_carousel_themes');
+                $wpgmza_carousel_theme = isset($wpgmza_settings['wpgmza_settings_carousel_markerlist_theme']) ? $wpgmza_settings['wpgmza_settings_carousel_markerlist_theme'] : 'sky';
+                $wpgmza_carousel_theme = preg_replace('/[^a-z0-9_-]/i', '', $wpgmza_carousel_theme);
+                wp_add_inline_style('wpgmaps_carousel_themes', '.wpgmza_marker_carousel { --wpgmza-carousel-theme: "'.esc_attr($wpgmza_carousel_theme).'"; }');
+                wp_add_inline_script('wpgmaps_swiper', 'document.addEventListener("DOMContentLoaded", function(){ document.querySelectorAll(".wpgmza_marker_carousel").forEach(function(el){ el.classList.add("wpgmza-theme-'.esc_js($wpgmza_carousel_theme).'"); }); });');
             }
             
 

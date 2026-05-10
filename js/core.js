@@ -20,6 +20,59 @@ var retina = window.devicePixelRatio > 1;
 var wpgmza_is_touch = (typeof window.matchMedia === "function" && window.matchMedia('(pointer: coarse)').matches) || ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 var wpgmza_is_small_screen = (typeof window.matchMedia === "function" && window.matchMedia('(max-width: 1024px)').matches);
 
+var wpgmza_swiper_instances = {};
+function wpgmza_init_swiper(selector, owlOpts) {
+    if (typeof window.Swiper !== 'function') { return null; }
+    var $el = jQuery(selector);
+    if (!$el.length) { return null; }
+    if (!$el.hasClass('swiper')) { return null; }
+    if (!$el.children('.swiper-wrapper').length) {
+        $el.children().not('.swiper-pagination').not('.swiper-button-prev').not('.swiper-button-next').wrapAll('<div class="swiper-wrapper"></div>');
+    }
+    if (!$el.children('.swiper-pagination').length) { $el.append('<div class="swiper-pagination"></div>'); }
+    if (!$el.children('.swiper-button-prev').length) { $el.append('<div class="swiper-button-prev"></div>'); }
+    if (!$el.children('.swiper-button-next').length) { $el.append('<div class="swiper-button-next"></div>'); }
+
+    var key = $el.attr('id') || selector;
+    if (wpgmza_swiper_instances[key] && typeof wpgmza_swiper_instances[key].destroy === 'function') {
+        wpgmza_swiper_instances[key].destroy(true, true);
+    }
+
+    owlOpts = owlOpts || {};
+    var slidesPerView = parseInt(owlOpts.items, 10) || 5;
+    var smallScreen = (typeof window.matchMedia === 'function' && window.matchMedia('(max-width: 768px)').matches);
+    var tabletScreen = (typeof window.matchMedia === 'function' && window.matchMedia('(max-width: 1024px)').matches);
+
+    var config = {
+        slidesPerView: smallScreen ? 1 : (tabletScreen ? Math.min(2, slidesPerView) : slidesPerView),
+        spaceBetween: 12,
+        autoHeight: !!owlOpts.autoHeight,
+        watchOverflow: true,
+        a11y: { enabled: true },
+        keyboard: { enabled: true },
+        breakpoints: {
+            600: { slidesPerView: Math.min(2, slidesPerView) },
+            1024: { slidesPerView: Math.min(3, slidesPerView) },
+            1280: { slidesPerView: slidesPerView }
+        }
+    };
+
+    if (owlOpts.lazyLoad) { config.lazy = { loadPrevNext: true }; }
+    if (owlOpts.autoPlay && parseInt(owlOpts.autoPlay, 10) > 0) {
+        config.autoplay = { delay: parseInt(owlOpts.autoPlay, 10), disableOnInteraction: false, pauseOnMouseEnter: true };
+    }
+    if (owlOpts.pagination !== false) { config.pagination = { el: $el.children('.swiper-pagination')[0], clickable: true }; }
+    if (owlOpts.navigation !== false) {
+        config.navigation = {
+            nextEl: $el.children('.swiper-button-next')[0],
+            prevEl: $el.children('.swiper-button-prev')[0]
+        };
+    }
+
+    wpgmza_swiper_instances[key] = new window.Swiper($el[0], config);
+    return wpgmza_swiper_instances[key];
+}
+
 function wpgmza_apply_mobile_options(opts) {
     if (!opts) { return opts; }
     if (wpgmza_is_touch) {
@@ -200,14 +253,7 @@ jQuery(function() {
                 default_items = items;
 
                 if (wpgmaps_localize[entry]['total_markers'] < items) { items = wpgmaps_localize[entry]['total_markers']; }
-                jQuery("#wpgmza_marker_list_"+wpgmaps_localize[entry]['id']).owlCarousel({
-                    autoPlay: autoplay,
-                    lazyLoad : lazyload,
-                    autoHeight : autoheight,
-                    pagination : pagination,
-                    navigation : navigation,
-                    items : items
-                });
+                wpgmza_init_swiper("#wpgmza_marker_list_"+wpgmaps_localize[entry]['id'], { autoPlay: autoplay, lazyLoad: lazyload, autoHeight: autoheight, pagination: pagination, navigation: navigation, items: items });
                     
             } 
         }
@@ -328,14 +374,7 @@ jQuery(function() {
                     /* carousel listing */
                     jQuery.post(ajaxurl, data, function(response) {
                             jQuery("#wpgmza_marker_list_container_"+wpgmza_map_id+"").html(response);
-                            jQuery("#wpgmza_marker_list_"+wpgmza_map_id+"").owlCarousel({
-                                autoPlay: autoplay,
-                                lazyLoad : lazyload,
-                                autoHeight : autoheight,
-                                pagination : pagination,
-                                navigation : navigation,
-                                items : items
-                            });
+                            wpgmza_init_swiper("#wpgmza_marker_list_"+wpgmza_map_id+"", { autoPlay: autoplay, lazyLoad: lazyload, autoHeight: autoheight, pagination: pagination, navigation: navigation, items: items });
 
                     });
                 }
@@ -399,14 +438,7 @@ jQuery(function() {
                             };
                             jQuery.post(ajaxurl, data, function(response) {
                                     jQuery("#wpgmza_marker_list_container_"+wpgmza_map_id+"").html(response);
-                                    jQuery("#wpgmza_marker_list_"+wpgmza_map_id+"").owlCarousel({
-                                        autoPlay: autoplay,
-                                        lazyLoad : lazyload,
-                                        autoHeight : autoheight,
-                                        pagination : pagination,
-                                        navigation : navigation,
-                                        items : items
-                                    });
+                                    wpgmza_init_swiper("#wpgmza_marker_list_"+wpgmza_map_id+"", { autoPlay: autoplay, lazyLoad: lazyload, autoHeight: autoheight, pagination: pagination, navigation: navigation, items: items });
 
                             });
                             
@@ -463,14 +495,7 @@ jQuery(function() {
                             };
                             jQuery.post(ajaxurl, data, function(response) {
                                     jQuery("#wpgmza_marker_list_container_"+wpgmza_map_id+"").html(response);
-                                    jQuery("#wpgmza_marker_list_"+wpgmza_map_id+"").owlCarousel({
-                                        autoPlay: autoplay,
-                                        lazyLoad : lazyload,
-                                        autoHeight : autoheight,
-                                        pagination : pagination,
-                                        navigation : navigation,
-                                        items : items
-                                    });
+                                    wpgmza_init_swiper("#wpgmza_marker_list_"+wpgmza_map_id+"", { autoPlay: autoplay, lazyLoad: lazyload, autoHeight: autoheight, pagination: pagination, navigation: navigation, items: items });
 
                             });
                             
@@ -1400,14 +1425,7 @@ jQuery(function() {
                                 if (marker_sl_array.length < items) { items = marker_sl_array.length; } else { items = default_items; }
                                 if (items < 1) { items = 1; }
 
-                                jQuery("#wpgmza_marker_list_"+map_id+"").owlCarousel({
-                                    autoPlay: autoplay,
-                                    lazyLoad : lazyload,
-                                    autoHeight : autoheight,
-                                    pagination : pagination,
-                                    navigation : navigation,
-                                    items : items
-                                });
+                                wpgmza_init_swiper("#wpgmza_marker_list_"+map_id+"", { autoPlay: autoplay, lazyLoad: lazyload, autoHeight: autoheight, pagination: pagination, navigation: navigation, items: items });
 
                         });
                     }
@@ -1859,14 +1877,7 @@ jQuery(function() {
                             if (marker_sl_array.length < items) { items = marker_sl_array.length; } else { items = default_items; }
                             if (items < 1) { items = 1; }
 
-                            jQuery("#wpgmza_marker_list_"+map_id+"").owlCarousel({
-                                autoPlay: autoplay,
-                                lazyLoad : lazyload,
-                                autoHeight : autoheight,
-                                pagination : pagination,
-                                navigation : navigation,
-                                items : items
-                            });
+                            wpgmza_init_swiper("#wpgmza_marker_list_"+map_id+"", { autoPlay: autoplay, lazyLoad: lazyload, autoHeight: autoheight, pagination: pagination, navigation: navigation, items: items });
 
                     });
                 }

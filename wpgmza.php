@@ -301,7 +301,7 @@ class wpgmza {
                         } else { $wpgmaps_dir_text = ""; }
 
 
-                        $wpgmza_tmp_body .= "<div class=\"item wpgmaps_mlist_row $carousel_oddeven\" mid=\"".$result->id."\" mapid=\"".$result->map_id."\"> ";
+                        $wpgmza_tmp_body .= "<div class=\"swiper-slide item wpgmaps_mlist_row $carousel_oddeven\" mid=\"".$result->id."\" mapid=\"".$result->map_id."\"> ";
                         if ($carousel_show_image) { $wpgmza_tmp_body .= "   <div class=\"wpgmza_carousel_image_holder\">$pic</div>"; }
                         if ($carousel_show_icon) { $wpgmza_tmp_body .= "   <div class=\"wpgmza_carousel_image_holder\">$icon</div>"; }
                         $wpgmza_tmp_body .= "   <div class=\"wpgmza_carousel_info_holder\">";
@@ -368,7 +368,7 @@ class wpgmza {
                 $wpgmza_tmp_head .= "</thead>";
                 $wpgmza_tmp_head .= "<tbody>";
             } else if ($type == 3) {
-                $wpgmza_tmp_head .= "<div id=\"wpgmza_marker_list_container_".$result->map_id."\"><div id=\"wpgmza_marker_list_".$result->map_id."\" class=\"wpgmza_marker_carousel owl-carousel\" style=\"width:$width;\">";
+                $wpgmza_tmp_head .= "<div id=\"wpgmza_marker_list_container_".$result->map_id."\"><div id=\"wpgmza_marker_list_".$result->map_id."\" class=\"wpgmza_marker_carousel swiper\" style=\"width:$width;\"><div class=\"swiper-wrapper\">";
             } else {
                 $wpgmza_tmp_head .= "<div id=\"wpgmza_marker_holder_".$map_id."\" style=\"width:$width;\">";
                 $wpgmza_tmp_head .= "<table id=\"wpgmza_table_".$map_id."\" class=\"wpgmza_table\" cellspacing=\"0\" cellpadding=\"0\" style=\"width:$width;\">";
@@ -395,7 +395,7 @@ class wpgmza {
             } else if ($type == 2) {
                 $wpgmza_tmp_footer .= "</tbody></table></div><!-- end of marker list -->";       
             } else if ($type == 3) {
-                $wpgmza_tmp_footer .= "</div></div>";
+                $wpgmza_tmp_footer .= "</div><div class=\"swiper-pagination\"></div><div class=\"swiper-button-prev\"></div><div class=\"swiper-button-next\"></div></div></div>";
 
             } else {
                 $wpgmza_tmp_footer .= "</tbody></table></div>";
