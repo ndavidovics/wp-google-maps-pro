@@ -3,8 +3,8 @@
 
     var smallScreen = function () {
         return (typeof window.matchMedia === 'function')
-            ? window.matchMedia('(max-width: 768px)').matches
-            : window.innerWidth <= 768;
+            ? window.matchMedia('(max-width: 1024px)').matches
+            : window.innerWidth <= 1024;
     };
 
     function wrapInner($container, klass) {

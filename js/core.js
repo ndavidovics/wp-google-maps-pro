@@ -18,7 +18,7 @@ var pagination;
 var navigation;
 var retina = window.devicePixelRatio > 1;
 var wpgmza_is_touch = (typeof window.matchMedia === "function" && window.matchMedia('(pointer: coarse)').matches) || ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-var wpgmza_is_small_screen = (typeof window.matchMedia === "function" && window.matchMedia('(max-width: 600px)').matches);
+var wpgmza_is_small_screen = (typeof window.matchMedia === "function" && window.matchMedia('(max-width: 1024px)').matches);
 
 function wpgmza_apply_mobile_options(opts) {
     if (!opts) { return opts; }

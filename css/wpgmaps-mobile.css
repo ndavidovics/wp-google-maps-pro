@@ -80,7 +80,7 @@
 }
 .wpgmza_marker_card a { word-break: break-word; }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .wpgmza_map {
         width: 100% !important;
         height: 60vh !important;
