@@ -2035,8 +2035,8 @@ function wpgmaps_tag_pro( $atts ) {
 
                         </td>
                     </tr>
-                    <tr class='wpgmaps_from_row'><td class='wpgmaps_from_td1'>".__("From","wp-google-maps").":</td><td width='90%' class='wpgmaps_from_td2'><input type=\"text\" value=\"\" id=\"wpgmza_input_from_".$wpgmza_current_map_id."\" style='width:80%' /> $use_location_from</td></tr>
-                    <tr class='wpgmaps_to_row'><td class='wpgmaps_to_td1'>".__("To","wp-google-maps").":</td><td width='90%' class='wpgmaps_to_td2'><input type=\"text\" value=\"$default_to\" id=\"wpgmza_input_to_".$wpgmza_current_map_id."\" style='width:80%' /> $use_location_to</td></tr>
+                    <tr class='wpgmaps_from_row'><td class='wpgmaps_from_td1'>".__("From","wp-google-maps").":</td><td width='90%' class='wpgmaps_from_td2'><input type=\"text\" value=\"\" id=\"wpgmza_input_from_".$wpgmza_current_map_id."\" style='width:80%' inputmode=\"search\" autocomplete=\"street-address\" /> $use_location_from</td></tr>
+                    <tr class='wpgmaps_to_row'><td class='wpgmaps_to_td1'>".__("To","wp-google-maps").":</td><td width='90%' class='wpgmaps_to_td2'><input type=\"text\" value=\"$default_to\" id=\"wpgmza_input_to_".$wpgmza_current_map_id."\" style='width:80%' inputmode=\"search\" autocomplete=\"street-address\" /> $use_location_to</td></tr>
                     <tr>
 
                       <td>
@@ -2063,9 +2063,6 @@ function wpgmaps_tag_pro( $atts ) {
 
         $ret_msg = "
             $wpgmza_marker_datatables_output
-            <style>
-            .wpgmza_map img { max-width:none !important; }
-            </style>
             ".wpgmaps_check_approval_string()."
             ".wpgmaps_return_marker_anchors($wpgmza_anchors)."
             $wpgmza_marker_filter_output
@@ -2095,9 +2092,6 @@ function wpgmaps_tag_pro( $atts ) {
         
         $ret_msg = "
             $wpgmza_marker_datatables_output
-            <style>
-            .wpgmza_map img { max-width:none !important; }
-            </style>
             
             <div id=\"display:block; width:100%; overflow:auto;\">
 
@@ -2143,9 +2137,6 @@ function wpgmaps_tag_pro( $atts ) {
         /* we're using meta fields to generate the map, ignore default functionality */
         
         $ret_msg = "
-            <style>
-                .wpgmza_map img { max-width:none !important; }
-            </style>
             <div id=\"wpgmza_map_".$wpgmza_current_map_id."\" class='wpgmza_map' $map_style></div>
             ";
     }
@@ -2352,9 +2343,15 @@ function wpgmaps_user_javascript_pro() {
                 
             }
             
-            wp_enqueue_script('wpgmaps_core', plugins_url('wp-google-maps-pro') .'/js/core.js', array(), $wpgmza_pro_version.'p' , false);
-            
-            
+            $wpgmza_min = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '' : '.min';
+            wp_enqueue_script('wpgmaps_core', plugins_url('wp-google-maps-pro') .'/js/core'.$wpgmza_min.'.js', array(), $wpgmza_pro_version.'p' , false);
+
+            wp_register_style('wpgmaps_mobile_style', plugins_url('wp-google-maps-pro') .'/css/wpgmaps-mobile.css', array(), $wpgmza_pro_version.'p');
+            wp_enqueue_style('wpgmaps_mobile_style');
+            wp_register_script('wpgmaps_mobile', plugins_url('wp-google-maps-pro') .'/js/wpgmaps-mobile'.$wpgmza_min.'.js', array('jquery','wpgmaps_core'), $wpgmza_pro_version.'p', true);
+            wp_enqueue_script('wpgmaps_mobile');
+
+
             if (function_exists("wpgmaps_ugm_activate")) {
                 global $wpgmza_ugm_version;
                 wp_enqueue_script('wpgmaps_ugm_core', plugins_url('wp-google-maps-ugm') .'/js/ugm-core.js', array(), $wpgmza_ugm_version.'vgm' , false);
@@ -5529,13 +5526,13 @@ function wpgmaps_sl_user_output_pro($map_id) {
     $ret_msg .= "<div class=\"wpgmza_sl_main_div\">";
     $ret_msg .= "       <div class=\"wpgmza_sl_query_div\">";
     $ret_msg .= "           <div class=\"wpgmza_sl_query_innerdiv1\">".$sl_query_string."</div>";
-    $ret_msg .= "           <div class=\"wpgmza_sl_query_innerdiv2\"><input type=\"text\" id=\"addressInput\" size=\"20\" value=\"\" /></div>";
+    $ret_msg .= "           <div class=\"wpgmza_sl_query_innerdiv2\"><input type=\"text\" id=\"addressInput\" size=\"20\" value=\"\" inputmode=\"search\" autocomplete=\"postal-code\" /><button type=\"button\" class=\"wpgmza_sl_geolocate_button\" data-mapid=\"".intval($map_id)."\" aria-label=\"".esc_attr__("Use my location","wp-google-maps")."\" title=\"".esc_attr__("Use my location","wp-google-maps")."\">&#x25CE;</button></div>";
     $ret_msg .= "       </div>";
 
     if (isset($map_other_settings['store_locator_name_search']) && intval($map_other_settings['store_locator_name_search']) == 1) {
         $ret_msg .= "       <div class=\"wpgmza_sl_query_div\">";
         $ret_msg .= "           <div class=\"wpgmza_sl_query_innerdiv1 wpgmza_name_search_string\">".$sl_name_string."</div>";
-        $ret_msg .= "           <div class=\"wpgmza_sl_query_innerdiv2 wpgmza_name_search_field\"><input type=\"text\" id=\"nameInput\" size=\"20\" value=\"\" /></div>";
+        $ret_msg .= "           <div class=\"wpgmza_sl_query_innerdiv2 wpgmza_name_search_field\"><input type=\"text\" id=\"nameInput\" size=\"20\" value=\"\" inputmode=\"search\" autocomplete=\"off\" /></div>";
         $ret_msg .= "       </div>";
     }
 
